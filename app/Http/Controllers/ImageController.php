@@ -28,6 +28,14 @@ class ImageController extends Controller
                     return $this->responseArr;
                 }
                 return $this->responseArr;
+            }elseif(isset($request['query'])){
+                $images=Image::where('categorias','like','%'.$request["query"].'%')->OrderBy('created_at','desc')->get();
+                $this->responseArr['error']=false;
+                $this->responseArr['message']='Completed';
+                $this->responseArr['query']=$request['query'];
+                $this->responseArr['lenght']=count($images);
+                $this->responseArr['images']=$images;
+                return $this->responseArr;
             }
             $images=Image::OrderBy('created_at','desc')->get();
             $this->responseArr['error']=false;

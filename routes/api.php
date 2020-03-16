@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 Route::group(['middleware'=>['auth:api']],function(){
-    Route::get('/image',['uses'=>'ImageController@index']);
+    Route::get('/image',['uses'=>'ImageController@index'])->name('api.images');
 });

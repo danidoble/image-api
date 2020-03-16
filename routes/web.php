@@ -13,10 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', 'HomeController@index')->name('inicio');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::middleware('auth')->group(function (){
+    Route::get('/credentials', 'HomeController@credentials')->name('credentials');
+
+    //ADMIN
+    Route::middleware('isAdmin')->group(function (){
+        Route::get('/admin/create', 'HomeController@adminCreate')->name('admin.create');
+        Route::post('/admin/create/confirm', 'HomeController@adminInsert')->name('admin.create.post');
+    });
+});
